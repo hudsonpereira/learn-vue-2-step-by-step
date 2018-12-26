@@ -6,20 +6,29 @@
 </head>
 <body>
     <div id="root">
-        <input type="text" id="input" v-model="message">
+        <ul>
+            <li v-for="name in names">{{ name }}</li>
+        </ul>
 
-        <p>The value of the input is: {{ message }}</p>
+        <input type="text" v-model="newName">
+        <button @click="handleAddName">Add name</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
-        let data = {
-            message: 'Hello World'
-        }
-
         new Vue({
             el: '#root',
-            data: data
+            data: {
+                newName: '',
+                names : ['Hudson', 'Daniele', 'Isabelle', 'Hugo']
+            },
+
+            methods: {
+                handleAddName() {
+                    this.names.push(this.newName);
+                    this.newName = '';
+                }
+            }
         })
     </script>
 </body>
