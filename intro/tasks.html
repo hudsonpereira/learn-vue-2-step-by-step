@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tasks App</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="root" class="container mx-auto shadow p-5 mt-5 rounded">
+        <div class="flex flex-col md:flex-row items-start">
+            <div class="md:w-1/2 w-100 lg:mr-3">
+                <h1 class="mb-4 font-thin text-yellow-darker underline">Uncompleted Tasks</h1>
+
+                <ul class="list-reset leading-loose">
+                    <li v-for="task in todos" class="cursor-pointer bg-grey-lightest p-1 m-1" @click="completeTask(task)">{{ task.description }}</li>
+                </ul>
+
+                <p class="text-xl bg-green-dark p-2 text-white rounded" v-show="! todos.length">Congrats! You've killed them all.</p>
+            </div>
+
+            <div class="md:w-1/2 w-100 mt-10 md:mt-0">
+                <h1 class="mb-4 font-thin text-green underline">Completed Tasks</h1>
+
+                <ul class="list-reset leading-loose">
+                    <li v-for="task in done" class="cursor-pointer bg-grey-lightest p-1 m-1" @click="uncompleteTask(task)">{{ task.description }}</li>
+                </ul>
+
+                <p class="text-xl bg-red-dark p-2 text-white rounded" v-show="! done.length">Get back to work.</p>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#root',
+            data: {
+                tasks: [
+                    {description: 'Lorem ipsum dolor.', complete: true},
+                    {description: 'You are running Vue in development mode.', complete: false},
+                    {description: 'Make sure to turn on production mode when deploying for production.', complete: false},
+                    {description: 'See more tips at https://vuejs.org/guide/deployment.html', complete: false},
+                    {description: 'Lorem ipsum dolor.', complete: false},
+                ]
+            },
+
+            methods: {
+                completeTask(task) {
+                    task.complete = true;
+                },
+
+                uncompleteTask(task) {
+                    task.complete = false;
+                }
+            },
+
+            computed: {
+                todos() {
+                    return this.tasks.filter(task => ! task.complete)
+                },
+
+                done() {
+                    return this.tasks.filter(task => task.complete)
+                }
+            }
+        })
+    </script>
+</body>
+</html>

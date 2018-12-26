@@ -11,7 +11,7 @@
         </ul>
 
         <input type="text" v-model="newName">
-        <button @click="handleAddName">Add name</button>
+        <button :title="title" @click="handleAddName">Add name</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -19,14 +19,17 @@
         new Vue({
             el: '#root',
             data: {
+                title: 'binding attributes',
                 newName: '',
                 names : ['Hudson', 'Daniele', 'Isabelle', 'Hugo']
             },
 
             methods: {
                 handleAddName() {
-                    this.names.push(this.newName);
-                    this.newName = '';
+                    if (this.newName != '') {
+                        this.names.push(this.newName);
+                        this.newName = '';
+                    }
                 }
             }
         })
